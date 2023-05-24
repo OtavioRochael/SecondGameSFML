@@ -54,16 +54,22 @@ void Player::UpdateInput()
 
 void Player::UpdateWindowBounceCollision(const sf::RenderTarget* target)
 {
-	sf::Vector2f playerCurrentPosition = (this->shape.getPosition());
-	sf::FloatRect playerBounds = this->shape.getGlobalBounds();
-
 	//Left
-	if (playerBounds.left <= 0.f) {
-		this->shape.setPosition(sf::Vector2f(0.f, playerCurrentPosition.y));
+	if (this->shape.getGlobalBounds().left <= 0.f) {
+		this->shape.setPosition(sf::Vector2f(0.1f, this->shape.getGlobalBounds().top));
 	}
 	//Right
-	else if (playerBounds.left + this->shape.getSize().x >= target->getSize().x) {
-		this->shape.setPosition(sf::Vector2f(target->getSize().x - this->shape.getSize().x, playerCurrentPosition.y));
+	if (this->shape.getGlobalBounds().left + this->shape.getGlobalBounds().width >= target->getSize().x) {
+		this->shape.setPosition(sf::Vector2f(target->getSize().x - this->shape.getGlobalBounds().width, this->shape.getGlobalBounds().top));
+	}
+
+	//Top
+	if (this->shape.getGlobalBounds().top <= 0.f) {
+		this->shape.setPosition(sf::Vector2f(this->shape.getGlobalBounds().left , 0.1f));
+	}
+	//Bottom
+	if (this->shape.getGlobalBounds().top + this->shape.getGlobalBounds().height >= target->getSize().y) {
+		this->shape.setPosition(sf::Vector2f(this->shape.getGlobalBounds().left, target->getSize().y - this->shape.getGlobalBounds().height));
 	}
 }
 
