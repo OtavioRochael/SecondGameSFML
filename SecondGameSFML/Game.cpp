@@ -4,7 +4,6 @@
 void Game::InitVariables()
 {
 	this->endGame = false;
-	this->player;
 }
 
 void Game::InitWindow()
@@ -60,5 +59,6 @@ void Game::Render()
 	//Render stuff
 
 	player.Render(this->window);
+
 	this->window->display();
 }
