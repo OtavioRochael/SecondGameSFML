@@ -12,6 +12,9 @@ private:
 	sf::RectangleShape shape;
 
 	float movementSpeed;
+	int hp;
+	int hpMax;
+	int points;
 
 	void InitVariables();
 	void InitShape();
@@ -19,6 +22,11 @@ private:
 public:
 	Player(float x = 0.f, float y = 0.f);
 	~Player();
+
+	const sf::RectangleShape& GetShape();
+	const int GetPoints();
+
+	void AddPoint();
 
 	void Update(const sf::RenderTarget* target);
 	void UpdateInput();

@@ -4,6 +4,9 @@
 void Game::InitVariables()
 {
 	this->endGame = false;
+	this->spawnTimerMax = 10.f;
+	this->spawnTimer = spawnTimerMax;
+	this->maxBalls = 10;
 }
 
 void Game::InitWindow()
@@ -46,9 +49,40 @@ void Game::PollEvents()
 	}
 }
 
+void Game::SpawnBalls()
+{
+	if (this->spawnTimer < this->spawnTimerMax)
+		this->spawnTimer += 1.f;
+	else {
+		if (this->balls.size() < this->maxBalls) {
+			this->balls.push_back(Ball(*this->window));
+
+			this->spawnTimer = 0.f;
+
+		}	
+	}
+}
+
+void Game::UpdateCollision()
+{	
+	//Check the collision and erase the ball inside the vector<ball>
+	for (size_t i = 0; i < this->balls.size(); i++) {
+		if (this->player.GetShape().getGlobalBounds().intersects(this->balls[i].GetShape().getGlobalBounds()))
+		{
+			this->balls.erase(this->balls.begin() + i);
+			player.AddPoint();
+			std::cout << player.GetPoints() << std::endl;
+		}
+	}
+	
+}
+
 void Game::Update()
 {
 	this->PollEvents();
+	this->SpawnBalls();
+	this->UpdateCollision();
+
 	player.Update(this->window);
 }
 
@@ -59,6 +93,11 @@ void Game::Render()
 	//Render stuff
 
 	player.Render(this->window);
+
+	//Render the ball in vector balls
+	for (auto a : balls) {
+		a.Render(this->window);
+	}
 
 	this->window->display();
 }

@@ -11,13 +11,15 @@ class Ball
 private:
 	sf::CircleShape shape;
 	
-	void InitShape();
+	void InitShape(const sf::RenderWindow& window);
 
 public:
-	Ball();
+	Ball(const sf::RenderWindow& window);
 	~Ball();
 
-	void Update();
-	void Render();
+	const sf::CircleShape& GetShape();
+
+	void Update(const sf::RenderTarget* target);
+	void Render(sf::RenderTarget* target);
 };
 
