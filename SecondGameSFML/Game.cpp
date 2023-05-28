@@ -17,11 +17,29 @@ void Game::InitWindow()
 	this->window->setFramerateLimit(60);
 }
 
+void Game::InitFonts()
+{
+	if (!this->font.loadFromFile("Fonts/Minecraftia-Regular.ttf")) {
+		std::cout << "ERROR:: FONTS :: COULD NOT LOAD Fonts/Minecraftia-Regular.ttf" << std::endl;
+	}
+}
+
+void Game::InitText()
+{
+	//Gui text init
+	this->guiText.setFont(this->font);
+	this->guiText.setPosition(sf::Vector2f(8.f, 20.f));
+	this->guiText.setFillColor(sf::Color::White);
+	this->guiText.setCharacterSize(20);	
+}
+
 //Constructors / Destructors
 Game::Game()
 {
 	InitVariables();
 	InitWindow();
+	InitFonts();
+	InitText();
 }
 
 Game::~Game()
@@ -71,11 +89,18 @@ void Game::UpdateCollision()
 		if (this->player.GetShape().getGlobalBounds().intersects(this->balls[i].GetShape().getGlobalBounds()))
 		{
 			this->balls.erase(this->balls.begin() + i);
-			this->points+=10;
-			std::cout << points << std::endl;
+			this->points++;
 		}
 	}
 	
+}
+
+void Game::UpdateGUI()
+{
+	std::stringstream ss;
+	ss << "Points:  " << points << std::endl;
+
+	this->guiText.setString(ss.str());
 }
 
 void Game::Update()
@@ -83,8 +108,14 @@ void Game::Update()
 	this->PollEvents();
 	this->SpawnBalls();
 	this->UpdateCollision();
+	this->UpdateGUI();
 
 	player.Update(this->window);
+}
+
+void Game::RenderGUI(sf::RenderTarget* target)
+{
+	target->draw(this->guiText);
 }
 
 void Game::Render()
@@ -99,6 +130,10 @@ void Game::Render()
 	for (auto a : balls) {
 		a.Render(this->window);
 	}
+
+	//Render GUI
+
+	this->RenderGUI(this->window);
 
 	this->window->display();
 }

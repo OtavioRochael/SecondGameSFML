@@ -3,6 +3,7 @@
 #include <iostream>
 #include <ctime>
 #include <vector>
+#include <sstream>
 
 #include "Player.hpp"
 #include "Ball.hpp"
@@ -32,6 +33,8 @@ private:
 
 	void InitVariables();
 	void InitWindow();
+	void InitFonts();
+	void InitText();
 
 public:
 	//Constructors / Destructors
@@ -49,7 +52,10 @@ public:
 
 	void SpawnBalls();
 	void UpdateCollision();
+	void UpdateGUI();
 	void Update();
+	
+	void RenderGUI(sf::RenderTarget* target);
 	void Render();
 };
 
