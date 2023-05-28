@@ -26,9 +26,40 @@ Player::~Player()
 {
 }
 
+//ACESSORS
+#pragma region ACESSORS
 const sf::RectangleShape& Player::GetShape()
 {
 	return this->shape;
+}
+
+const int& Player::GetHealth()
+{
+	return this->hp;
+}
+
+const int& Player::GetMaxHealth()
+{
+	return this->hpMax;
+}
+#pragma endregion ACESSORS
+
+//FUNCTIONS 
+#pragma region FUNCTIONS
+void Player::TakeDamage(const int damage)
+{
+	if (this->hp < 0)
+		this->hp = 0;
+	else
+		this->hp -= damage;
+}
+
+void Player::GainHealth(const int health)
+{
+	if (this->hp >= this->hpMax)
+		this->hp = this->hpMax;
+	else
+		this->hp += health;
 }
 
 void Player::Update(const sf::RenderTarget *target)
@@ -85,3 +116,5 @@ void Player::Render(sf::RenderTarget* target)
 {
 	target->draw(this->shape);
 }
+
+#pragma endregion FUNCTIONS

@@ -74,7 +74,7 @@ void Game::SpawnBalls()
 		this->spawnTimer += 1.f;
 	else {
 		if (this->balls.size() < this->maxBalls) {
-			this->balls.push_back(Ball(*this->window));
+			this->balls.push_back(Ball((*this->window), rand() % BallTypes::NROFTYPES));
 
 			this->spawnTimer = 0.f;
 
@@ -88,8 +88,24 @@ void Game::UpdateCollision()
 	for (size_t i = 0; i < this->balls.size(); i++) {
 		if (this->player.GetShape().getGlobalBounds().intersects(this->balls[i].GetShape().getGlobalBounds()))
 		{
+			switch (this->balls[i].GetType())
+			{
+			case BallTypes::DEFAULT:
+					//Add points
+					this->points++;
+				break;
+
+			case BallTypes::DAMAGING:
+				this->player.TakeDamage(1);
+				break;
+
+			case BallTypes::HEALING:
+				this->player.GainHealth(1);
+				break;
+			}
+
+			//Removing the balls
 			this->balls.erase(this->balls.begin() + i);
-			this->points++;
 		}
 	}
 	
@@ -98,8 +114,8 @@ void Game::UpdateCollision()
 void Game::UpdateGUI()
 {
 	std::stringstream ss;
-	ss << "Points:  " << points << std::endl;
-
+	ss << "- Points:  " << points << std::endl <<
+		"- Health: " << this->player.GetHealth() << " / " << this->player.GetMaxHealth();
 	this->guiText.setString(ss.str());
 }
 
@@ -136,4 +152,4 @@ void Game::Render()
 	this->RenderGUI(this->window);
 
 	this->window->display();
-}
+}	
