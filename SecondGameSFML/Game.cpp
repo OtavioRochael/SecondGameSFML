@@ -7,6 +7,7 @@ void Game::InitVariables()
 	this->spawnTimerMax = 10.f;
 	this->spawnTimer = spawnTimerMax;
 	this->maxBalls = 10;
+	this->points = 0;
 }
 
 void Game::InitWindow()
@@ -70,8 +71,8 @@ void Game::UpdateCollision()
 		if (this->player.GetShape().getGlobalBounds().intersects(this->balls[i].GetShape().getGlobalBounds()))
 		{
 			this->balls.erase(this->balls.begin() + i);
-			player.AddPoint();
-			std::cout << player.GetPoints() << std::endl;
+			this->points+=10;
+			std::cout << points << std::endl;
 		}
 	}
 	

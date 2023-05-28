@@ -5,7 +5,6 @@ void Player::InitVariables()
 	this->movementSpeed = 5.f;
 	this->hpMax = 3;
 	this->hp = this->hpMax;
-	this->points = 0;
 }
 
 void Player::InitShape()
@@ -30,16 +29,6 @@ Player::~Player()
 const sf::RectangleShape& Player::GetShape()
 {
 	return this->shape;
-}
-
-const int Player::GetPoints()
-{
-	return this->points;
-}
-
-void Player::AddPoint()
-{
-	this->points++;
 }
 
 void Player::Update(const sf::RenderTarget *target)

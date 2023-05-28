@@ -17,9 +17,16 @@ private:
 	Player player;
 
 	std::vector<Ball> balls;
+	
+	int points;
+
+	sf::Font font;
+	sf::Text guiText;
+
 	float spawnTimerMax;
 	float spawnTimer;
-	int maxBalls;
+
+	short unsigned int maxBalls;
 
 	bool endGame;
 

@@ -14,7 +14,6 @@ private:
 	float movementSpeed;
 	int hp;
 	int hpMax;
-	int points;
 
 	void InitVariables();
 	void InitShape();
@@ -24,9 +23,6 @@ public:
 	~Player();
 
 	const sf::RectangleShape& GetShape();
-	const int GetPoints();
-
-	void AddPoint();
 
 	void Update(const sf::RenderTarget* target);
 	void UpdateInput();
